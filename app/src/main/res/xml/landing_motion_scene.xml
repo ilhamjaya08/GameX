@@ -10,46 +10,68 @@
         motion:autoTransition="animateToEnd" />
 
     <ConstraintSet android:id="@+id/start">
-        <Constraint
-            android:id="@id/heroIllustration"
-            android:alpha="0"
-            android:scaleX="0.75"
-            android:scaleY="0.75" />
+        <Constraint android:id="@id/heroIllustration">
+            <Layout
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                motion:layout_constraintDimensionRatio="1.1"
+                motion:layout_constraintEnd_toEndOf="parent"
+                motion:layout_constraintHeight_default="wrap"
+                motion:layout_constraintStart_toStartOf="parent"
+                motion:layout_constraintTop_toTopOf="parent" />
+            <PropertySet android:alpha="0" />
+            <Transform
+                android:scaleX="0.75"
+                android:scaleY="0.75" />
+        </Constraint>
 
-        <Constraint
-            android:id="@id/taglineTitle"
-            android:alpha="0"
-            android:translationY="32dp" />
+        <Constraint android:id="@id/taglineTitle">
+            <Layout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                motion:layout_constraintStart_toStartOf="parent"
+                motion:layout_constraintTop_toBottomOf="@id/heroIllustration" />
+            <PropertySet android:alpha="0" />
+            <Transform android:translationY="32dp" />
+        </Constraint>
 
-        <Constraint
-            android:id="@id/taglineSubtitle"
-            android:alpha="0"
-            android:translationY="40dp" />
-
-        <Constraint
-            android:id="@id/registerButton"
-            android:alpha="0"
-            android:translationY="48dp">
+        <Constraint android:id="@id/taglineSubtitle">
             <Layout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                motion:layout_constraintEnd_toEndOf="parent"
+                motion:layout_constraintStart_toStartOf="parent"
+                motion:layout_constraintTop_toBottomOf="@id/taglineTitle" />
+            <PropertySet android:alpha="0" />
+            <Transform android:translationY="40dp" />
+        </Constraint>
+
+        <Constraint android:id="@id/registerButton">
+            <Layout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
                 motion:layout_constraintEnd_toEndOf="parent"
                 motion:layout_constraintStart_toStartOf="parent"
                 motion:layout_constraintTop_toBottomOf="@id/taglineSubtitle"
                 motion:layout_constraintWidth_percent="0.5" />
+            <PropertySet android:alpha="0" />
+            <Transform android:translationY="48dp" />
         </Constraint>
 
-        <Constraint
-            android:id="@id/loginButton"
-            android:alpha="0"
-            android:translationY="56dp">
+        <Constraint android:id="@id/loginButton">
             <Layout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 motion:layout_constraintEnd_toEndOf="parent"
                 motion:layout_constraintStart_toStartOf="parent"
                 motion:layout_constraintTop_toBottomOf="@id/registerButton"
                 motion:layout_constraintWidth_percent="0.5" />
+            <PropertySet android:alpha="0" />
+            <Transform android:translationY="56dp" />
         </Constraint>
     </ConstraintSet>
 
@@ -63,8 +85,8 @@
                 motion:layout_constraintHeight_default="wrap"
                 motion:layout_constraintStart_toStartOf="parent"
                 motion:layout_constraintTop_toTopOf="parent" />
-            <PropertySet
-                android:alpha="1"
+            <PropertySet android:alpha="1" />
+            <Transform
                 android:scaleX="1"
                 android:scaleY="1" />
         </Constraint>

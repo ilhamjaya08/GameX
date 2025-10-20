@@ -1,8 +1,21 @@
 <resources>
     <string name="app_name">GameX</string>
     <string name="landing_title">GameX</string>
-    <string name="landing_subtitle">Level up pengalaman gaming kamu dengan top up di GameX.</string>
+    <string name="landing_subtitle">Level up pengalaman gaming kamu bersama komunitas terbaik.</string>
     <string name="landing_register">Register</string>
     <string name="landing_login">Login</string>
     <string name="landing_image_content_description">Ilustrasi video gim</string>
+    <string name="auth_logo_content_description">Logo GameX</string>
+    <string name="auth_email_label">Email</string>
+    <string name="auth_password_label">Password</string>
+    <string name="auth_email_hint">Masukkan email kamu</string>
+    <string name="auth_password_hint">Masukkan password kamu</string>
+    <string name="register_title">Register</string>
+    <string name="register_action">Buat Akun</string>
+    <string name="login_title">Login</string>
+    <string name="login_action">Masuk</string>
+    <string name="auth_email_required">Email belum boleh kosong.</string>
+    <string name="auth_password_required">Password belum boleh kosong.</string>
+    <string name="login_placeholder_message">Login belum tersedia. Silakan coba lagi nanti.</string>
+    <string name="register_placeholder_message">Registrasi belum tersedia. Silakan coba lagi nanti.</string>
 </resources>
