@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetEnd="@id/end"
+        motion:constraintSetStart="@id/start"
+        motion:duration="1200"
+        motion:motionInterpolator="easeInOut"
+        motion:autoTransition="animateToEnd" />
+
+    <ConstraintSet android:id="@+id/start">
+        <Constraint
+            android:id="@id/heroIllustration"
+            android:alpha="0"
+            android:scaleX="0.75"
+            android:scaleY="0.75" />
+
+        <Constraint
+            android:id="@id/taglineTitle"
+            android:alpha="0"
+            android:translationY="32dp" />
+
+        <Constraint
+            android:id="@id/taglineSubtitle"
+            android:alpha="0"
+            android:translationY="40dp" />
+
+        <Constraint
+            android:id="@id/registerButton"
+            android:alpha="0"
+            android:translationY="48dp">
+            <Layout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                motion:layout_constraintEnd_toEndOf="parent"
+                motion:layout_constraintStart_toStartOf="parent"
+                motion:layout_constraintTop_toBottomOf="@id/taglineSubtitle"
+                motion:layout_constraintWidth_percent="0.5" />
+        </Constraint>
+
+        <Constraint
+            android:id="@id/loginButton"
+            android:alpha="0"
+            android:translationY="56dp">
+            <Layout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                motion:layout_constraintEnd_toEndOf="parent"
+                motion:layout_constraintStart_toStartOf="parent"
+                motion:layout_constraintTop_toBottomOf="@id/registerButton"
+                motion:layout_constraintWidth_percent="0.5" />
+        </Constraint>
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+        <Constraint android:id="@id/heroIllustration">
+            <Layout
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                motion:layout_constraintDimensionRatio="1.1"
+                motion:layout_constraintEnd_toEndOf="parent"
+                motion:layout_constraintHeight_default="wrap"
+                motion:layout_constraintStart_toStartOf="parent"
+                motion:layout_constraintTop_toTopOf="parent" />
+            <PropertySet
+                android:alpha="1"
+                android:scaleX="1"
+                android:scaleY="1" />
+        </Constraint>
+
+        <Constraint android:id="@id/taglineTitle">
+            <Layout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                motion:layout_constraintStart_toStartOf="parent"
+                motion:layout_constraintTop_toBottomOf="@id/heroIllustration"
+                android:layout_marginTop="32dp" />
+            <PropertySet android:alpha="1" />
+        </Constraint>
+
+        <Constraint android:id="@id/taglineSubtitle">
+            <Layout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                motion:layout_constraintEnd_toEndOf="parent"
+                motion:layout_constraintStart_toStartOf="parent"
+                motion:layout_constraintTop_toBottomOf="@id/taglineTitle" />
+            <PropertySet android:alpha="1" />
+        </Constraint>
+
+        <Constraint android:id="@id/registerButton">
+            <Layout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                motion:layout_constraintEnd_toEndOf="parent"
+                motion:layout_constraintStart_toStartOf="parent"
+                motion:layout_constraintTop_toBottomOf="@id/taglineSubtitle"
+                motion:layout_constraintWidth_percent="0.5" />
+            <PropertySet android:alpha="1" />
+        </Constraint>
+
+        <Constraint android:id="@id/loginButton">
+            <Layout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                motion:layout_constraintEnd_toEndOf="parent"
+                motion:layout_constraintStart_toStartOf="parent"
+                motion:layout_constraintTop_toBottomOf="@id/registerButton"
+                motion:layout_constraintWidth_percent="0.5" />
+            <PropertySet android:alpha="1" />
+        </Constraint>
+    </ConstraintSet>
+
+</MotionScene>

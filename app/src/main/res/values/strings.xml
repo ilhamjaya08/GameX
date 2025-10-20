@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">GameX</string>
-    <string name="main_title">Selamat datang di GameX</string>
-    <string name="main_subtitle">Bangun pengalaman gim Anda dimulai dari sini.</string>
-    <string name="main_primary_action">Mulai</string>
-    <string name="main_logo_content_description">Logo GameX</string>
+    <string name="landing_title">GameX</string>
+    <string name="landing_subtitle">Level up pengalaman gaming kamu dengan top up di GameX.</string>
+    <string name="landing_register">Register</string>
+    <string name="landing_login">Login</string>
+    <string name="landing_image_content_description">Ilustrasi video gim</string>
 </resources>
