@@ -1,7 +1,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.GameX" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+    <style name="Base.Theme.GameX" parent="Theme.Material3.DayNight.NoActionBar" />
+
+    <style name="Theme.GameX.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">#181818</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/gamex_logo</item>
+        <item name="postSplashScreenTheme">@style/Theme.GameX</item>
+        <item name="android:windowBackground">#181818</item>
     </style>
 </resources>

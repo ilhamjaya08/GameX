@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">GameX</string>
+    <string name="main_title">Selamat datang di GameX</string>
+    <string name="main_subtitle">Bangun pengalaman gim Anda dimulai dari sini.</string>
+    <string name="main_primary_action">Mulai</string>
+    <string name="main_logo_content_description">Logo GameX</string>
 </resources>
