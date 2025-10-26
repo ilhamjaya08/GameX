@@ -10,12 +10,23 @@
     <string name="auth_password_label">Password</string>
     <string name="auth_email_hint">Masukkan email kamu</string>
     <string name="auth_password_hint">Masukkan password kamu</string>
+    <string name="auth_name_label">Nama</string>
+    <string name="auth_name_hint">Masukkan nama kamu</string>
     <string name="register_title">Register</string>
     <string name="register_action">Buat Akun</string>
     <string name="login_title">Login</string>
     <string name="login_action">Masuk</string>
     <string name="auth_email_required">Email belum boleh kosong.</string>
     <string name="auth_password_required">Password belum boleh kosong.</string>
-    <string name="login_placeholder_message">Login belum tersedia. Silakan coba lagi nanti.</string>
-    <string name="register_placeholder_message">Registrasi belum tersedia. Silakan coba lagi nanti.</string>
+    <string name="auth_name_required">Nama belum boleh kosong.</string>
+    <string name="auth_email_invalid">Format email belum benar.</string>
+    <string name="auth_password_length">Password minimal 8 karakter.</string>
+    <string name="auth_internal_error">Internal server error.</string>
+    <string name="auth_credentials_incorrect">Email atau password salah.</string>
+    <string name="register_success_message">Registrasi berhasil.</string>
+    <string name="login_success_message">Login berhasil.</string>
+    <string name="home_title">GameX Home</string>
+    <string name="home_subtitle">Fitur top up game akan segera hadir. Tetap pantau ya!</string>
+    <string name="home_logout">Logout</string>
+    <string name="home_back_press_exit">Tekan sekali lagi untuk keluar.</string>
 </resources>

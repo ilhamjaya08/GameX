@@ -37,10 +37,42 @@
             app:layout_constraintTop_toBottomOf="@id/logoImage" />
 
         <TextView
-            android:id="@+id/registerEmailLabel"
+            android:id="@+id/registerNameLabel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
+            android:gravity="start"
+            android:text="@string/auth_name_label"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/registerTitle"
+            app:layout_constraintWidth_percent="0.8" />
+
+        <EditText
+            android:id="@+id/registerNameInput"
+            android:layout_width="0dp"
+            android:layout_height="54dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_input_field"
+            android:hint="@string/auth_name_hint"
+            android:inputType="textPersonName"
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp"
+            android:textColor="@android:color/white"
+            android:textColorHint="#80FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/registerNameLabel"
+            app:layout_constraintWidth_percent="0.8" />
+
+        <TextView
+            android:id="@+id/registerEmailLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:gravity="start"
             android:text="@string/auth_email_label"
             android:textColor="@android:color/white"
@@ -48,7 +80,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/registerTitle"
+            app:layout_constraintTop_toBottomOf="@id/registerNameInput"
             app:layout_constraintWidth_percent="0.8" />
 
         <EditText

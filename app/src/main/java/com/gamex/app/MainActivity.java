@@ -18,6 +18,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         SplashScreen.installSplashScreen(this);
         super.onCreate(savedInstanceState);
+
+        if (AuthManager.isLoggedIn(this)) {
+            navigateToHome();
+            return;
+        }
+
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -36,5 +42,12 @@ public class MainActivity extends AppCompatActivity {
         loginButton.setOnClickListener(v ->
                 startActivity(new Intent(MainActivity.this, LoginActivity.class))
         );
+    }
+
+    private void navigateToHome() {
+        Intent intent = new Intent(this, HomeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 }
