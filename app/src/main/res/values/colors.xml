@@ -5,4 +5,17 @@
     <color name="gamex_green">#6CBE93</color>
     <color name="gamex_surface_dark">#181818</color>
     <color name="gamex_surface_muted">#1F1F1F</color>
+    <color name="gamex_surface_alt">#202329</color>
+    <color name="gamex_surface_card">#232832</color>
+    <color name="gamex_header_gradient_start">#2C3E50</color>
+    <color name="gamex_header_gradient_end">#1F2A36</color>
+    <color name="gamex_text_primary">#F5F7FA</color>
+    <color name="gamex_text_secondary">#A3AFBF</color>
+    <color name="gamex_ripple">#33FFFFFF</color>
+    <color name="gamex_card_stroke">#1AFFFFFF</color>
+    <color name="gamex_hero_gradient_start">#354A63</color>
+    <color name="gamex_hero_gradient_end">#1F2A36</color>
+    <color name="gamex_nominal_accent_start">#6CBE93</color>
+    <color name="gamex_nominal_accent_end">#3E7C5D</color>
+    <color name="gamex_nominal_accent_overlay">#20403B</color>
 </resources>

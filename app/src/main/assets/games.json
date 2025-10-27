@@ -1,0 +1,86 @@
+[
+  {
+    "id": "codm",
+    "name": "Call of Duty: Mobile",
+    "drawable": "codm",
+    "description": "Dominasi pertempuran 5v5 dan battle royale dengan senjata ikonik Call of Duty.",
+    "isUsingServerZone": false
+  },
+  {
+    "id": "deltaforce",
+    "name": "Delta Force",
+    "drawable": "deltaforce",
+    "description": "Masuki operasi militer rahasia dengan skuad elit Delta Force dan arsenal futuristik.",
+    "isUsingServerZone": false
+  },
+  {
+    "id": "efootball",
+    "name": "eFootball",
+    "drawable": "efootball",
+    "description": "Rakit skuad impianmu dan rebut panggung sepak bola global di eFootball.",
+    "isUsingServerZone": false
+  },
+  {
+    "id": "fcmobile",
+    "name": "FC Mobile",
+    "drawable": "fcmobile",
+    "description": "Bangun Ultimate Team dan taklukan liga dunia di EA SPORTS FC Mobile.",
+    "isUsingServerZone": false
+  },
+  {
+    "id": "freefire",
+    "name": "Free Fire",
+    "drawable": "freefire",
+    "description": "Turun ke pulau, susun strategi, dan jadilah yang terakhir bertahan di Free Fire.",
+    "isUsingServerZone": true
+  },
+  {
+    "id": "honorofkings",
+    "name": "Honor of Kings",
+    "drawable": "honorofkings",
+    "description": "Kuasi hero unik dan rebut menara musuh di MOBA paling populer asal Tiongkok.",
+    "isUsingServerZone": true
+  },
+  {
+    "id": "mlbb",
+    "name": "Mobile Legends: Bang Bang",
+    "drawable": "mlbb",
+    "description": "Push rank, kunci hero favorit, dan raih kemenangan dalam pertandingan 5v5 MLBB.",
+    "isUsingServerZone": true
+  },
+  {
+    "id": "ragnaroketernal",
+    "name": "Ragnarok Eternal",
+    "drawable": "ragnaroketernal",
+    "description": "Jelajahi Midgard bersama guild dan tingkatkan job klasik di Ragnarok Eternal.",
+    "isUsingServerZone": true
+  },
+  {
+    "id": "roblox",
+    "name": "Roblox",
+    "drawable": "roblox",
+    "description": "Bergabunglah di jutaan dunia kreatif dan komunitas Roblox yang selalu hidup.",
+    "isUsingServerZone": false
+  },
+  {
+    "id": "umamusume",
+    "name": "Uma Musume: Pretty Derby",
+    "drawable": "umamusume",
+    "description": "Latih horse girl favoritmu menuju kemenangan di balapan bergengsi Uma Musume.",
+    "isUsingServerZone": true
+  },
+  {
+    "id": "valorant",
+    "name": "Valorant",
+    "drawable": "valorant",
+    "description": "Kuasai agent dengan kemampuan unik dan buktikan aim-mu di Valorant.",
+    "isUsingServerZone": false
+  },
+  {
+    "id": "wuwa",
+    "name": "Wuthering Waves",
+    "drawable": "wuwa",
+    "description": "Terjang badai sonorant dan jelajahi dunia futuristik Wuthering Waves.",
+    "isUsingServerZone": true
+  }
+]
