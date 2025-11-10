@@ -14,13 +14,6 @@
     "isUsingServerZone": false
   },
   {
-    "id": "efootball",
-    "name": "eFootball",
-    "drawable": "efootball",
-    "description": "Rakit skuad impianmu dan rebut panggung sepak bola global di eFootball.",
-    "isUsingServerZone": false
-  },
-  {
     "id": "fcmobile",
     "name": "FC Mobile",
     "drawable": "fcmobile",
@@ -63,24 +56,10 @@
     "isUsingServerZone": false
   },
   {
-    "id": "umamusume",
-    "name": "Uma Musume: Pretty Derby",
-    "drawable": "umamusume",
-    "description": "Latih horse girl favoritmu menuju kemenangan di balapan bergengsi Uma Musume.",
-    "isUsingServerZone": true
-  },
-  {
     "id": "valorant",
     "name": "Valorant",
     "drawable": "valorant",
     "description": "Kuasai agent dengan kemampuan unik dan buktikan aim-mu di Valorant.",
     "isUsingServerZone": false
-  },
-  {
-    "id": "wuwa",
-    "name": "Wuthering Waves",
-    "drawable": "wuwa",
-    "description": "Terjang badai sonorant dan jelajahi dunia futuristik Wuthering Waves.",
-    "isUsingServerZone": true
   }
 ]

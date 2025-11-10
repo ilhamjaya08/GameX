@@ -51,4 +51,67 @@
     <string name="game_nominal_not_selected">Pilih nominal top up terlebih dahulu.</string>
     <string name="game_not_found">Data game tidak ditemukan.</string>
     <string name="game_submit_success">Siap top up %1$s paket %2$s seharga %3$s lewat %4$s!</string>
+
+    <!-- Balance -->
+    <string name="home_balance_label">Saldo Kamu</string>
+    <string name="home_balance_placeholder">Rp 0</string>
+    <string name="home_balance_loading">Memuat…</string>
+    <string name="home_balance_error">Gagal memuat</string>
+    <string name="home_balance_error_toast">Gagal memuat saldo. Silakan coba lagi.</string>
+
+    <!-- Topup Activity -->
+    <string name="topup_title">Top Up Saldo</string>
+    <string name="topup_back_button">Kembali</string>
+    <string name="topup_current_balance_label">Saldo Saat Ini</string>
+    <string name="topup_description">Isi saldo untuk kemudahan transaksi top-up game favorit kamu.</string>
+    <string name="topup_amount_section_title">Jumlah Top Up</string>
+    <string name="topup_amount_hint">Masukkan jumlah</string>
+    <string name="topup_payment_method_section_title">Metode Pembayaran</string>
+    <string name="topup_payment_method_logo">Logo metode pembayaran</string>
+    <string name="topup_payment_unavailable">Segera hadir</string>
+    <string name="topup_submit_button">TOP UP SALDO</string>
+    <string name="topup_amount_required">Jumlah top up belum diisi.</string>
+    <string name="topup_amount_invalid">Jumlah tidak valid.</string>
+    <string name="topup_amount_minimum">Minimal top up Rp 10.000</string>
+    <string name="topup_payment_required">Pilih metode pembayaran terlebih dahulu.</string>
+    <string name="topup_processing">Memproses top up…</string>
+    <string name="topup_success_title">Top Up Berhasil!</string>
+    <string name="topup_success_message">Saldo kamu telah ditambahkan sebesar %1$s</string>
+
+    <!-- Alerts -->
+    <string name="alert_no_internet_title">Tidak Ada Koneksi</string>
+    <string name="alert_no_internet_message">Pastikan perangkat kamu terhubung ke internet.</string>
+    <string name="alert_retry">Coba Lagi</string>
+    <string name="alert_cancel">Batal</string>
+    <string name="alert_ok">OK</string>
+
+    <!-- Profile -->
+    <string name="profile_avatar">Avatar profil</string>
+    <string name="profile_edit">Edit Profil</string>
+    <string name="profile_about">Tentang Aplikasi</string>
+    <string name="profile_logout">Keluar</string>
+    <string name="profile_edit_icon">Icon edit profil</string>
+    <string name="profile_about_icon">Icon tentang</string>
+    <string name="profile_chevron">Chevron</string>
+    <string name="profile_loading">Memuat profil…</string>
+    <string name="profile_error">Gagal memuat profil</string>
+    <string name="profile_logout_confirm_title">Konfirmasi Logout</string>
+    <string name="profile_logout_confirm_message">Apakah kamu yakin ingin keluar?</string>
+
+    <!-- Edit Profile -->
+    <string name="edit_profile_title">Edit Profil</string>
+    <string name="edit_profile_name_label">Nama</string>
+    <string name="edit_profile_email_label">Email</string>
+    <string name="edit_profile_phone_label">Nomor Telepon</string>
+    <string name="edit_profile_phone_hint">Masukkan nomor telepon</string>
+    <string name="edit_profile_save">Simpan Perubahan</string>
+    <string name="edit_profile_success">Profil berhasil diperbarui</string>
+
+    <!-- About -->
+    <string name="about_title">Tentang Aplikasi</string>
+    <string name="about_app_name">GameX</string>
+    <string name="about_version">Versi</string>
+    <string name="about_build">Build</string>
+    <string name="about_description">Platform top-up game favorit kamu dengan mudah dan aman.</string>
+    <string name="about_copyright">© 2025 GameX. All rights reserved.</string>
 </resources>

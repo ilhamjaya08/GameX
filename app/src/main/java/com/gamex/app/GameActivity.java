@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.gamex.app.models.UserResponse;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textfield.TextInputEditText;
@@ -60,12 +61,11 @@ public class GameActivity extends AppCompatActivity {
     private TextInputEditText playerIdInput;
     private TextInputEditText serverZoneInput;
     private MaterialButton submitButton;
+    private TextView currentBalanceAmount;
 
-    private PaymentMethodAdapter paymentMethodAdapter;
+    private ApiService apiService;
     private NominalAdapter nominalAdapter;
 
-    private String selectedPaymentId;
-    private String selectedPaymentName;
     private NominalOption selectedNominal;
 
     @Override
@@ -74,9 +74,12 @@ public class GameActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_game);
 
+        apiService = new ApiService();
+
         initViews();
         setupRecyclerViews();
         setupListeners();
+        loadBalance();
 
         String gameId = getIntent().getStringExtra(EXTRA_GAME_ID);
         if (gameId == null || gameId.isEmpty()) {
@@ -85,6 +88,14 @@ public class GameActivity extends AppCompatActivity {
             return;
         }
         loadGameData(gameId);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (apiService != null) {
+            apiService.shutdown();
+        }
     }
 
     private void initViews() {
@@ -96,21 +107,10 @@ public class GameActivity extends AppCompatActivity {
         playerIdInput = findViewById(R.id.playerIdInput);
         serverZoneInput = findViewById(R.id.serverZoneInput);
         submitButton = findViewById(R.id.submitButton);
+        currentBalanceAmount = findViewById(R.id.currentBalanceAmount);
     }
 
     private void setupRecyclerViews() {
-        RecyclerView paymentRecyclerView = findViewById(R.id.paymentRecyclerView);
-        paymentRecyclerView.setLayoutManager(new GridLayoutManager(this, 4));
-        paymentRecyclerView.setHasFixedSize(true);
-        paymentRecyclerView.setItemAnimator(null);
-
-        paymentMethodAdapter = new PaymentMethodAdapter(method -> {
-            selectedPaymentId = method.id;
-            selectedPaymentName = method.displayName;
-        });
-        paymentRecyclerView.setAdapter(paymentMethodAdapter);
-        paymentMethodAdapter.submitList(createPaymentMethods());
-
         RecyclerView nominalRecyclerView = findViewById(R.id.nominalRecyclerView);
         nominalRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         nominalRecyclerView.setHasFixedSize(true);
@@ -140,7 +140,7 @@ public class GameActivity extends AppCompatActivity {
             String priceText = selectedNominal != null ? formatCurrency(selectedNominal.price) : "";
             Toast.makeText(
                     this,
-                    getString(R.string.game_submit_success, gameTitle.getText(), nominalText, priceText, selectedPaymentName),
+                    "Berhasil! Top up " + gameTitle.getText() + " - " + nominalText + " seharga " + priceText,
                     Toast.LENGTH_SHORT
             ).show();
         });
@@ -229,11 +229,6 @@ public class GameActivity extends AppCompatActivity {
             }
         }
 
-        if (selectedPaymentId == null) {
-            Toast.makeText(this, R.string.game_payment_not_selected, Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
         if (selectedNominal == null) {
             Toast.makeText(this, R.string.game_nominal_not_selected, Toast.LENGTH_SHORT).show();
             return false;
@@ -242,13 +237,29 @@ public class GameActivity extends AppCompatActivity {
         return true;
     }
 
-    private List<PaymentMethod> createPaymentMethods() {
-        return Arrays.asList(
-                new PaymentMethod("qris", "QRIS", R.drawable.logo_qris),
-                new PaymentMethod("gopay", "GoPay", R.drawable.logo_gopay),
-                new PaymentMethod("dana", "DANA", R.drawable.logo_dana),
-                new PaymentMethod("ovo", "OVO", R.drawable.logo_ovo)
-        );
+    private void loadBalance() {
+        if (!NetworkUtils.isNetworkAvailable(this)) {
+            currentBalanceAmount.setText(R.string.home_balance_error);
+            return;
+        }
+
+        currentBalanceAmount.setText(R.string.home_balance_loading);
+
+        apiService.fetchUserBalance(this, new ApiService.UserCallback() {
+            @Override
+            public void onSuccess(UserResponse userResponse) {
+                if (userResponse != null && userResponse.getUser() != null) {
+                    int balance = userResponse.getUser().getBalanceAsInt();
+                    String formattedBalance = CurrencyUtils.formatToRupiah(balance);
+                    currentBalanceAmount.setText(formattedBalance);
+                }
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                currentBalanceAmount.setText(R.string.home_balance_error);
+            }
+        });
     }
 
     private List<NominalOption> createNominalOptions() {
@@ -265,18 +276,6 @@ public class GameActivity extends AppCompatActivity {
         return CURRENCY_FORMAT.format(amount);
     }
 
-    private static final class PaymentMethod {
-        final String id;
-        final String displayName;
-        final int iconRes;
-
-        PaymentMethod(String id, String displayName, int iconRes) {
-            this.id = id;
-            this.displayName = displayName;
-            this.iconRes = iconRes;
-        }
-    }
-
     private static final class NominalOption {
         final String id;
         final String displayLabel;
@@ -288,85 +287,6 @@ public class GameActivity extends AppCompatActivity {
             this.displayLabel = displayLabel;
             this.price = price;
             this.detail = detail;
-        }
-    }
-
-    private static final class PaymentMethodAdapter extends RecyclerView.Adapter<PaymentMethodAdapter.PaymentMethodViewHolder> {
-
-        private final List<PaymentMethod> items = new ArrayList<>();
-        private final OnPaymentClickListener clickListener;
-        @Nullable
-        private String selectedId;
-
-        PaymentMethodAdapter(OnPaymentClickListener clickListener) {
-            this.clickListener = clickListener;
-        }
-
-        void submitList(List<PaymentMethod> newItems) {
-            items.clear();
-            items.addAll(newItems);
-            notifyDataSetChanged();
-        }
-
-        @NonNull
-        @Override
-        public PaymentMethodViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.item_payment_method, parent, false);
-            return new PaymentMethodViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull PaymentMethodViewHolder holder, int position) {
-            PaymentMethod method = items.get(position);
-            holder.bind(method, method.id.equals(selectedId));
-        }
-
-        @Override
-        public int getItemCount() {
-            return items.size();
-        }
-
-        interface OnPaymentClickListener {
-            void onPaymentClick(PaymentMethod method);
-        }
-
-        final class PaymentMethodViewHolder extends RecyclerView.ViewHolder {
-            private final MaterialCardView container;
-            private final ImageView icon;
-            private final TextView title;
-
-            PaymentMethodViewHolder(@NonNull View itemView) {
-                super(itemView);
-                container = (MaterialCardView) itemView;
-                icon = itemView.findViewById(R.id.paymentIcon);
-                title = itemView.findViewById(R.id.paymentName);
-                itemView.setOnClickListener(v -> {
-                    int adapterPosition = getAdapterPosition();
-                    if (adapterPosition == RecyclerView.NO_POSITION) {
-                        return;
-                    }
-                    PaymentMethod method = items.get(adapterPosition);
-                    selectedId = method.id;
-                    notifyDataSetChanged();
-                    clickListener.onPaymentClick(method);
-                });
-            }
-
-            void bind(PaymentMethod method, boolean isSelected) {
-                icon.setImageResource(method.iconRes);
-                title.setText(method.displayName);
-                container.setStrokeWidth(isSelected ? 3 : 1);
-                container.setStrokeColor(container.getContext().getColor(
-                        isSelected ? R.color.gamex_green : R.color.gamex_card_stroke
-                ));
-                container.setCardBackgroundColor(container.getContext().getColor(
-                        isSelected ? R.color.gamex_surface_dark : R.color.gamex_surface_alt
-                ));
-                title.setTextColor(container.getContext().getColor(
-                        isSelected ? R.color.gamex_text_primary : R.color.gamex_text_secondary
-                ));
-            }
         }
     }
 
