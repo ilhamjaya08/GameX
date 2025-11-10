@@ -84,4 +84,34 @@
     <string name="alert_retry">Coba Lagi</string>
     <string name="alert_cancel">Batal</string>
     <string name="alert_ok">OK</string>
+
+    <!-- Profile -->
+    <string name="profile_avatar">Avatar profil</string>
+    <string name="profile_edit">Edit Profil</string>
+    <string name="profile_about">Tentang Aplikasi</string>
+    <string name="profile_logout">Keluar</string>
+    <string name="profile_edit_icon">Icon edit profil</string>
+    <string name="profile_about_icon">Icon tentang</string>
+    <string name="profile_chevron">Chevron</string>
+    <string name="profile_loading">Memuat profil…</string>
+    <string name="profile_error">Gagal memuat profil</string>
+    <string name="profile_logout_confirm_title">Konfirmasi Logout</string>
+    <string name="profile_logout_confirm_message">Apakah kamu yakin ingin keluar?</string>
+
+    <!-- Edit Profile -->
+    <string name="edit_profile_title">Edit Profil</string>
+    <string name="edit_profile_name_label">Nama</string>
+    <string name="edit_profile_email_label">Email</string>
+    <string name="edit_profile_phone_label">Nomor Telepon</string>
+    <string name="edit_profile_phone_hint">Masukkan nomor telepon</string>
+    <string name="edit_profile_save">Simpan Perubahan</string>
+    <string name="edit_profile_success">Profil berhasil diperbarui</string>
+
+    <!-- About -->
+    <string name="about_title">Tentang Aplikasi</string>
+    <string name="about_app_name">GameX</string>
+    <string name="about_version">Versi</string>
+    <string name="about_build">Build</string>
+    <string name="about_description">Platform top-up game favorit kamu dengan mudah dan aman.</string>
+    <string name="about_copyright">© 2025 GameX. All rights reserved.</string>
 </resources>

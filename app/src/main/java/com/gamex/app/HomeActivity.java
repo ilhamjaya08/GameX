@@ -59,9 +59,7 @@ public class HomeActivity extends AppCompatActivity {
         ordersButton.setOnClickListener(v ->
                 Toast.makeText(this, R.string.home_action_orders, Toast.LENGTH_SHORT).show()
         );
-        accountButton.setOnClickListener(v ->
-                Toast.makeText(this, R.string.home_action_account, Toast.LENGTH_SHORT).show()
-        );
+        accountButton.setOnClickListener(v -> openProfileActivity());
 
         TextView footerText = findViewById(R.id.footerText);
         int year = Calendar.getInstance().get(Calendar.YEAR);
@@ -127,6 +125,11 @@ public class HomeActivity extends AppCompatActivity {
 
     private void openTopupActivity() {
         Intent intent = new Intent(this, TopupActivity.class);
+        startActivity(intent);
+    }
+
+    private void openProfileActivity() {
+        Intent intent = new Intent(this, ProfileActivity.class);
         startActivity(intent);
     }
 

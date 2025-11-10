@@ -16,6 +16,10 @@ public final class ApiConfig {
         return BASE_URL + "api/auth/me";
     }
 
+    public static String getProfileEndpoint() {
+        return BASE_URL + "api/auth/me";
+    }
+
     public static String getTopupEndpoint() {
         return BASE_URL + "api/topup";
     }

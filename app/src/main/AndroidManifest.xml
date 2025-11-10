@@ -45,6 +45,18 @@
             android:name=".TopupActivity"
             android:exported="false"
             android:theme="@style/Theme.GameX" />
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false"
+            android:theme="@style/Theme.GameX" />
+        <activity
+            android:name=".EditProfileActivity"
+            android:exported="false"
+            android:theme="@style/Theme.GameX" />
+        <activity
+            android:name=".AboutActivity"
+            android:exported="false"
+            android:theme="@style/Theme.GameX" />
     </application>
 
 </manifest>
