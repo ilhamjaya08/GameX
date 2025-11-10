@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -38,6 +39,10 @@
             android:theme="@style/Theme.GameX" />
         <activity
             android:name=".GameActivity"
+            android:exported="false"
+            android:theme="@style/Theme.GameX" />
+        <activity
+            android:name=".TopupActivity"
             android:exported="false"
             android:theme="@style/Theme.GameX" />
     </application>

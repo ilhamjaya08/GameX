@@ -1,17 +1,21 @@
 package com.gamex.app;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.gamex.app.models.UserResponse;
 import com.google.android.material.button.MaterialButton;
 
 import org.json.JSONArray;
@@ -34,6 +38,9 @@ public class HomeActivity extends AppCompatActivity {
 
     private long lastBackPressedTime = 0L;
     private GameAdapter gameAdapter;
+    private ApiService apiService;
+    private TextView balanceAmount;
+    private ProgressDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +48,11 @@ public class HomeActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_home);
 
-        MaterialButton logoutButton = findViewById(R.id.logoutButton);
-        logoutButton.setOnClickListener(v -> handleLogout());
+        apiService = new ApiService();
+        balanceAmount = findViewById(R.id.balanceAmount);
+
+        MaterialButton topupButton = findViewById(R.id.topupButton);
+        topupButton.setOnClickListener(v -> openTopupActivity());
 
         ImageView ordersButton = findViewById(R.id.ordersButton);
         ImageView accountButton = findViewById(R.id.accountButton);
@@ -67,14 +77,61 @@ public class HomeActivity extends AppCompatActivity {
         gameRecyclerView.setAdapter(gameAdapter);
 
         loadGames();
+        loadBalance();
     }
 
-    private void handleLogout() {
-        AuthManager.clearAccessToken(getApplicationContext());
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadBalance();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (apiService != null) {
+            apiService.shutdown();
+        }
+        if (loadingDialog != null && loadingDialog.isShowing()) {
+            loadingDialog.dismiss();
+        }
+    }
+
+    private void loadBalance() {
+        if (!NetworkUtils.isNetworkAvailable(this)) {
+            showNoInternetDialog();
+            balanceAmount.setText(R.string.home_balance_error);
+            return;
+        }
+
+        balanceAmount.setText(R.string.home_balance_loading);
+
+        apiService.fetchUserBalance(this, new ApiService.UserCallback() {
+            @Override
+            public void onSuccess(UserResponse userResponse) {
+                if (userResponse != null && userResponse.getUser() != null) {
+                    int balance = userResponse.getUser().getBalanceAsInt();
+                    String formattedBalance = CurrencyUtils.formatToRupiah(balance);
+                    balanceAmount.setText(formattedBalance);
+                }
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                Log.e(TAG, "Failed to load balance: " + errorMessage);
+                balanceAmount.setText(R.string.home_balance_error);
+                Toast.makeText(HomeActivity.this, R.string.home_balance_error_toast, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void openTopupActivity() {
+        Intent intent = new Intent(this, TopupActivity.class);
         startActivity(intent);
-        finish();
+    }
+
+    private void showNoInternetDialog() {
+        DialogUtils.showNoInternetDialog(this, (dialog, which) -> loadBalance());
     }
 
     @Override
