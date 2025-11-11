@@ -123,6 +123,8 @@ public class RegisterActivity extends AppCompatActivity {
             }
 
             AuthManager.saveAccessToken(getApplicationContext(), accessToken);
+            AuthManager.saveUserRole(getApplicationContext(), AuthManager.ROLE_USER);
+
             String message = json.optString("message", getString(R.string.register_success_message));
 
             runOnUiThread(() -> {
