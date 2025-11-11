@@ -115,11 +115,20 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             AuthManager.saveAccessToken(getApplicationContext(), accessToken);
+
+            String userRole = AuthManager.ROLE_USER;
+            JSONObject userObject = json.optJSONObject("user");
+            if (userObject != null) {
+                userRole = userObject.optString("role", AuthManager.ROLE_USER);
+            }
+            AuthManager.saveUserRole(getApplicationContext(), userRole);
+
             String message = json.optString("message", getString(R.string.login_success_message));
+            String finalRole = userRole;
 
             runOnUiThread(() -> {
                 Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
-                navigateToHome();
+                navigateBasedOnRole(finalRole);
             });
         } catch (JSONException exception) {
             showInternalError();
@@ -136,6 +145,18 @@ public class LoginActivity extends AppCompatActivity {
         } catch (JSONException exception) {
             showInternalError();
         }
+    }
+
+    private void navigateBasedOnRole(String role) {
+        Intent intent;
+        if (AuthManager.ROLE_ADMIN.equals(role)) {
+            intent = new Intent(this, AdminActivity.class);
+        } else {
+            intent = new Intent(this, HomeActivity.class);
+        }
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 
     private void navigateToHome() {

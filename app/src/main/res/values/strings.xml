@@ -114,4 +114,14 @@
     <string name="about_build">Build</string>
     <string name="about_description">Platform top-up game favorit kamu dengan mudah dan aman.</string>
     <string name="about_copyright">© 2025 GameX. All rights reserved.</string>
+
+    <!-- Admin Dashboard -->
+    <string name="admin_welcome">Selamat Datang, %1$s</string>
+    <string name="admin_welcome_error">Selamat Datang, Admin</string>
+    <string name="admin_subtitle">Dashboard Admin - Kelola semua aspek platform GameX</string>
+    <string name="admin_stats_title">Statistik Platform</string>
+    <string name="admin_total_users">Total Users</string>
+    <string name="admin_total_revenue">Total Revenue</string>
+    <string name="admin_total_orders">Total Orders</string>
+    <string name="admin_manage_games">Kelola Games</string>
 </resources>
