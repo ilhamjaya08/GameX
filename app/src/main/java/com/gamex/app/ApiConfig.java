@@ -23,4 +23,12 @@ public final class ApiConfig {
     public static String getTopupEndpoint() {
         return BASE_URL + "api/topup";
     }
+
+    public static String getDepositsEndpoint() {
+        return BASE_URL + "api/deposits";
+    }
+
+    public static String getDepositStatusEndpoint(int depositId) {
+        return BASE_URL + "api/deposits/" + depositId + "/refresh-status";
+    }
 }

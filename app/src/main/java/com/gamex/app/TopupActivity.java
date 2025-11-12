@@ -1,6 +1,7 @@
 package com.gamex.app;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -14,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.gamex.app.models.DepositResponse;
 import com.gamex.app.models.PaymentMethod;
 import com.gamex.app.models.UserResponse;
 import com.google.android.material.button.MaterialButton;
@@ -163,25 +165,52 @@ public class TopupActivity extends AppCompatActivity {
             return;
         }
 
-        if (amount < 10000) {
+        if (amount < 10) {
             Toast.makeText(this, R.string.topup_amount_minimum, Toast.LENGTH_SHORT).show();
             topupAmountInput.requestFocus();
             return;
         }
 
-        PaymentMethod selectedMethod = paymentMethodAdapter.getSelectedPaymentMethod();
-        if (selectedMethod == null) {
-            Toast.makeText(this, R.string.topup_payment_required, Toast.LENGTH_SHORT).show();
-            return;
-        }
+//        PaymentMethod selectedMethod = paymentMethodAdapter.getSelectedPaymentMethod();
+//        if (selectedMethod == null) {
+//            Toast.makeText(this, R.string.topup_payment_required, Toast.LENGTH_SHORT).show();
+//            return;
+//        }
 
         showLoadingDialog();
 
-        // Simulate topup submission
-        new android.os.Handler().postDelayed(() -> {
-            hideLoadingDialog();
-            showSuccessDialog(amount);
-        }, 2000);
+        apiService.createDeposit(this, amount, new ApiService.DepositCallback() {
+            @Override
+            public void onSuccess(DepositResponse depositResponse) {
+                hideLoadingDialog();
+
+                if (depositResponse.isSuccess() && depositResponse.getData() != null &&
+                    depositResponse.getData().getDeposit() != null) {
+
+                    int depositId = depositResponse.getData().getDeposit().getId();
+                    int totalAmount = depositResponse.getData().getDeposit().getTotalAmountAsInt();
+
+                    Intent intent = new Intent(TopupActivity.this, PaymentActivity.class);
+                    intent.putExtra("DEPOSIT_ID", depositId);
+                    intent.putExtra("TOTAL_AMOUNT", totalAmount);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Toast.makeText(TopupActivity.this,
+                        depositResponse.getMessage() != null ?
+                            depositResponse.getMessage() : "Failed to create deposit",
+                        Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                hideLoadingDialog();
+                Toast.makeText(TopupActivity.this,
+                    "Error: " + errorMessage,
+                    Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void showLoadingDialog() {

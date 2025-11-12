@@ -72,11 +72,35 @@
     <string name="topup_submit_button">TOP UP SALDO</string>
     <string name="topup_amount_required">Jumlah top up belum diisi.</string>
     <string name="topup_amount_invalid">Jumlah tidak valid.</string>
-    <string name="topup_amount_minimum">Minimal top up Rp 10.000</string>
+    <string name="topup_amount_minimum">Minimal top up Rp 10</string>
     <string name="topup_payment_required">Pilih metode pembayaran terlebih dahulu.</string>
     <string name="topup_processing">Memproses top up…</string>
     <string name="topup_success_title">Top Up Berhasil!</string>
     <string name="topup_success_message">Saldo kamu telah ditambahkan sebesar %1$s</string>
+
+    <!-- Payment Activity -->
+    <string name="payment_title">Pembayaran</string>
+    <string name="payment_back_button">Kembali</string>
+    <string name="payment_status_icon">Icon status pembayaran</string>
+    <string name="payment_status_pending">Menunggu Pembayaran</string>
+    <string name="payment_status_pending_message">Silakan lakukan pembayaran sesuai nominal yang tertera</string>
+    <string name="payment_status_success">Pembayaran Berhasil!</string>
+    <string name="payment_status_success_message">Saldo kamu telah ditambahkan sebesar %1$s</string>
+    <string name="payment_status_cancelled">Pembayaran Dibatalkan</string>
+    <string name="payment_status_cancelled_message">Transaksi ini telah dibatalkan. Silakan buat transaksi baru jika diperlukan.</string>
+    <string name="payment_total_amount">Total Pembayaran</string>
+    <string name="payment_base_amount">Jumlah Top Up</string>
+    <string name="payment_unique_code">Kode Unik</string>
+    <string name="payment_scan_qris">Scan QRIS untuk Bayar</string>
+    <string name="payment_qris_code">Kode QRIS</string>
+    <string name="payment_qris_instruction">Scan kode QR di atas menggunakan aplikasi e-wallet kamu</string>
+    <string name="payment_instructions_title">Cara Pembayaran</string>
+    <string name="payment_instruction_1">1. Buka aplikasi e-wallet kamu (GoPay, OVO, DANA, dll)</string>
+    <string name="payment_instruction_2">2. Scan kode QR di atas</string>
+    <string name="payment_instruction_3">3. Pastikan nominal pembayaran sesuai dengan total yang tertera</string>
+    <string name="payment_instruction_4">4. Konfirmasi pembayaran dan tunggu hingga status berubah menjadi berhasil</string>
+    <string name="payment_check_status">Cek Status Pembayaran</string>
+    <string name="payment_success_redirect">Mengarahkan ke halaman utama…</string>
 
     <!-- Alerts -->
     <string name="alert_no_internet_title">Tidak Ada Koneksi</string>
