@@ -114,7 +114,7 @@ public class TopupActivity extends AppCompatActivity {
             "gopay",
             "GoPay",
             "Bayar dengan GoPay",
-            R.drawable.logo_gopay,
+            R.drawable.logo_gopay_jpg,
             false
         ));
 
@@ -122,7 +122,7 @@ public class TopupActivity extends AppCompatActivity {
             "dana",
             "DANA",
             "Bayar dengan DANA",
-            R.drawable.logo_dana,
+            R.drawable.logo_dana_jpg,
             false
         ));
 
@@ -130,7 +130,7 @@ public class TopupActivity extends AppCompatActivity {
             "ovo",
             "OVO",
             "Bayar dengan OVO",
-            R.drawable.logo_ovo,
+            R.drawable.logo_ovo_jpg,
             false
         ));
 
