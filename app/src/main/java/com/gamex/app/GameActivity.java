@@ -37,7 +37,6 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -65,8 +64,10 @@ public class GameActivity extends AppCompatActivity {
 
     private ApiService apiService;
     private NominalAdapter nominalAdapter;
+    private RecyclerView nominalRecyclerView;
 
     private NominalOption selectedNominal;
+    private int categoryNo = -1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -111,14 +112,13 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerViews() {
-        RecyclerView nominalRecyclerView = findViewById(R.id.nominalRecyclerView);
+        nominalRecyclerView = findViewById(R.id.nominalRecyclerView);
         nominalRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        nominalRecyclerView.setHasFixedSize(true);
+        nominalRecyclerView.setNestedScrollingEnabled(false);
         nominalRecyclerView.setItemAnimator(null);
 
         nominalAdapter = new NominalAdapter(option -> selectedNominal = option);
         nominalRecyclerView.setAdapter(nominalAdapter);
-        nominalAdapter.submitList(createNominalOptions());
     }
 
     private void setupListeners() {
@@ -136,13 +136,7 @@ public class GameActivity extends AppCompatActivity {
             if (!validateForm()) {
                 return;
             }
-            String nominalText = selectedNominal != null ? selectedNominal.displayLabel : "";
-            String priceText = selectedNominal != null ? formatCurrency(selectedNominal.price) : "";
-            Toast.makeText(
-                    this,
-                    "Berhasil! Top up " + gameTitle.getText() + " - " + nominalText + " seharga " + priceText,
-                    Toast.LENGTH_SHORT
-            ).show();
+            processTransaction();
         });
 
         if (playerIdInput != null) {
@@ -183,6 +177,7 @@ public class GameActivity extends AppCompatActivity {
             String description = matched.optString("description");
             String drawableName = matched.optString("drawable");
             boolean requiresZone = matched.optBoolean("isUsingServerZone", false);
+            categoryNo = matched.optInt("no", -1);
 
             if (!drawableName.isEmpty()) {
                 int drawableRes = getResources().getIdentifier(drawableName, "drawable", getPackageName());
@@ -207,11 +202,65 @@ public class GameActivity extends AppCompatActivity {
                     serverZoneInput.setText("");
                 }
             }
+
+            // Load products from API
+            if (categoryNo != -1) {
+                loadProducts(categoryNo);
+            } else {
+                Toast.makeText(this, "Category not found", Toast.LENGTH_SHORT).show();
+            }
         } catch (IOException | JSONException exception) {
             Log.e(TAG, "Failed to load game data", exception);
             Toast.makeText(this, R.string.auth_internal_error, Toast.LENGTH_SHORT).show();
             finish();
         }
+    }
+
+    private void loadProducts(int categoryId) {
+        if (!NetworkUtils.isNetworkAvailable(this)) {
+            Toast.makeText(this, "No internet connection", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        apiService.fetchProducts(categoryId, new ApiService.ProductCallback() {
+            @Override
+            public void onSuccess(com.gamex.app.models.ProductResponse productResponse) {
+                if (productResponse.getProducts() != null && !productResponse.getProducts().isEmpty()) {
+                    List<NominalOption> options = new ArrayList<>();
+                    for (com.gamex.app.models.Product product : productResponse.getProducts()) {
+                        options.add(new NominalOption(
+                            String.valueOf(product.getId()),
+                            product.getKeterangan(),
+                            product.getHargaAsInt(),
+                            product.getNama()
+                        ));
+                    }
+                    Log.d(TAG, "Loaded " + options.size() + " products for category " + categoryId);
+                    nominalAdapter.submitList(options);
+
+                    // Force RecyclerView to expand to fit all items
+                    // Each item is approximately 108dp (92dp minHeight + 16dp marginBottom from layout)
+                    int itemHeightDp = 108;
+                    float density = getResources().getDisplayMetrics().density;
+                    int totalHeightPx = (int) (options.size() * itemHeightDp * density);
+
+                    nominalRecyclerView.post(() -> {
+                        ViewGroup.LayoutParams params = nominalRecyclerView.getLayoutParams();
+                        params.height = totalHeightPx;
+                        nominalRecyclerView.setLayoutParams(params);
+                        nominalRecyclerView.requestLayout();
+                    });
+                } else {
+                    Toast.makeText(GameActivity.this, "No products available", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                Log.e(TAG, "Failed to load products: " + errorMessage);
+                Toast.makeText(GameActivity.this, "Failed to load products", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private boolean validateForm() {
@@ -262,14 +311,57 @@ public class GameActivity extends AppCompatActivity {
         });
     }
 
-    private List<NominalOption> createNominalOptions() {
-        return Arrays.asList(
-                new NominalOption("diamond_5", "5 Diamonds", 1000, "Paket hemat harian."),
-                new NominalOption("diamond_12", "12 Diamonds", 2000, "Boost stamina tambahan."),
-                new NominalOption("diamond_70", "70 Diamonds", 10000, "Favorit buat weekly quest."),
-                new NominalOption("diamond_355", "355 Diamonds", 50000, "Pas untuk battle pass premium."),
-                new NominalOption("diamond_720", "720 Diamonds", 100000, "Satu langkah menuju koleksi langka.")
-        );
+    private void processTransaction() {
+        if (!NetworkUtils.isNetworkAvailable(this)) {
+            Toast.makeText(this, "No internet connection", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String playerId = playerIdInput.getText() != null ? playerIdInput.getText().toString().trim() : "";
+        int productId = selectedNominal != null ? Integer.parseInt(selectedNominal.id) : -1;
+
+        if (productId == -1) {
+            Toast.makeText(this, "Invalid product selected", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Show loading state
+        submitButton.setEnabled(false);
+        submitButton.setText("Processing...");
+
+        apiService.createTransaction(this, productId, playerId, new ApiService.TransactionCallback() {
+            @Override
+            public void onSuccess(com.gamex.app.models.TransactionResponse transactionResponse) {
+                submitButton.setEnabled(true);
+                submitButton.setText("Submit");
+
+                if (transactionResponse.getTransaction() != null) {
+                    // Show loading animation for 3 seconds
+                    Toast.makeText(GameActivity.this, "Transaction created successfully!", Toast.LENGTH_SHORT).show();
+
+                    new android.os.Handler().postDelayed(() -> {
+                        // Navigate to TransactionStatusActivity
+                        Intent intent = new Intent(GameActivity.this, TransactionStatusActivity.class);
+                        intent.putExtra("TRANSACTION_ID", transactionResponse.getTransaction().getId());
+                        startActivity(intent);
+                        finish();
+                    }, 3000);
+                }
+            }
+
+            @Override
+            public void onError(String errorMessage, int statusCode) {
+                submitButton.setEnabled(true);
+                submitButton.setText("Submit");
+
+                if (statusCode == 422) {
+                    // Insufficient balance
+                    DialogUtils.showErrorDialog(GameActivity.this, "Saldo Tidak Mencukupi", errorMessage);
+                } else {
+                    Toast.makeText(GameActivity.this, "Error: " + errorMessage, Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     private static String formatCurrency(int amount) {
@@ -304,6 +396,7 @@ public class GameActivity extends AppCompatActivity {
         void submitList(List<NominalOption> newItems) {
             items.clear();
             items.addAll(newItems);
+            Log.d(TAG, "NominalAdapter: submitList called with " + newItems.size() + " items, total items now: " + items.size());
             notifyDataSetChanged();
         }
 

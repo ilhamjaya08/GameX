@@ -235,7 +235,7 @@ public class TopupActivity extends AppCompatActivity {
             getString(R.string.topup_success_message, CurrencyUtils.formatToRupiah(amount)),
             (dialog, which) -> finish()
         );
-    }
+    };
 
     private void showNoInternetDialog() {
         DialogUtils.showNoInternetDialog(this, (dialog, which) -> loadBalance());

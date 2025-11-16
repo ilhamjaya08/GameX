@@ -156,6 +156,7 @@
                         android:text="@string/game_check_button"
                         android:textAllCaps="false"
                         android:textStyle="bold"
+                        android:visibility="gone"
                         app:backgroundTint="@android:color/transparent"
                         app:cornerRadius="24dp"
                         app:strokeColor="@color/gamex_green"

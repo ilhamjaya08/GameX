@@ -56,9 +56,7 @@ public class HomeActivity extends AppCompatActivity {
 
         ImageView ordersButton = findViewById(R.id.ordersButton);
         ImageView accountButton = findViewById(R.id.accountButton);
-        ordersButton.setOnClickListener(v ->
-                Toast.makeText(this, R.string.home_action_orders, Toast.LENGTH_SHORT).show()
-        );
+        ordersButton.setOnClickListener(v -> openOrdersActivity());
         accountButton.setOnClickListener(v -> openProfileActivity());
 
         TextView footerText = findViewById(R.id.footerText);
@@ -181,6 +179,11 @@ public class HomeActivity extends AppCompatActivity {
     private void openGameDetail(GameItem item) {
         Intent intent = new Intent(this, GameActivity.class);
         intent.putExtra(GameActivity.EXTRA_GAME_ID, item.id);
+        startActivity(intent);
+    }
+
+    private void openOrdersActivity() {
+        Intent intent = new Intent(this, OrdersActivity.class);
         startActivity(intent);
     }
 }

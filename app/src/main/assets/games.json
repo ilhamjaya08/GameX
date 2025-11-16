@@ -4,62 +4,87 @@
     "name": "Call of Duty: Mobile",
     "drawable": "codm",
     "description": "Dominasi pertempuran 5v5 dan battle royale dengan senjata ikonik Call of Duty.",
-    "isUsingServerZone": false
+    "isUsingServerZone": false,
+    "no": 2
   },
   {
     "id": "deltaforce",
     "name": "Delta Force",
     "drawable": "deltaforce",
     "description": "Masuki operasi militer rahasia dengan skuad elit Delta Force dan arsenal futuristik.",
-    "isUsingServerZone": false
+    "isUsingServerZone": false,
+    "no": 1
   },
   {
     "id": "fcmobile",
     "name": "FC Mobile",
     "drawable": "fcmobile",
     "description": "Bangun Ultimate Team dan taklukan liga dunia di EA SPORTS FC Mobile.",
-    "isUsingServerZone": false
+    "isUsingServerZone": false,
+    "no": 3
   },
   {
     "id": "freefire",
     "name": "Free Fire",
     "drawable": "freefire",
     "description": "Turun ke pulau, susun strategi, dan jadilah yang terakhir bertahan di Free Fire.",
-    "isUsingServerZone": true
+    "isUsingServerZone": true,
+    "no": 4
   },
   {
     "id": "honorofkings",
     "name": "Honor of Kings",
     "drawable": "honorofkings",
     "description": "Kuasi hero unik dan rebut menara musuh di MOBA paling populer asal Tiongkok.",
-    "isUsingServerZone": true
+    "isUsingServerZone": true,
+    "no": 5
   },
   {
     "id": "mlbb",
     "name": "Mobile Legends: Bang Bang",
     "drawable": "mlbb",
     "description": "Push rank, kunci hero favorit, dan raih kemenangan dalam pertandingan 5v5 MLBB.",
-    "isUsingServerZone": true
+    "isUsingServerZone": true,
+    "no": 6
   },
   {
     "id": "ragnaroketernal",
     "name": "Ragnarok Eternal",
     "drawable": "ragnaroketernal",
     "description": "Jelajahi Midgard bersama guild dan tingkatkan job klasik di Ragnarok Eternal.",
-    "isUsingServerZone": true
+    "isUsingServerZone": true,
+    "no": 7
   },
   {
     "id": "roblox",
     "name": "Roblox",
     "drawable": "roblox",
     "description": "Bergabunglah di jutaan dunia kreatif dan komunitas Roblox yang selalu hidup.",
-    "isUsingServerZone": false
+    "isUsingServerZone": false,
+    "no": 8
   },
   {
     "id": "valorant",
     "name": "Valorant",
     "drawable": "valorant",
     "description": "Kuasai agent dengan kemampuan unik dan buktikan aim-mu di Valorant.",
-    "isUsingServerZone": false
+    "isUsingServerZone": false,
+    "no": 9
+  },
+  {
+    "id": "dana",
+    "name": "Saldo Dana",
+    "drawable": "dana",
+    "description": "Topup saldo Dana",
+    "isUsingServerZone": false,
+    "no": 10
+  },
+  {
+    "id": "gopay",
+    "name": "Saldo Gopay",
+    "drawable": "gopay",
+    "description": "Topup saldo Gopay",
+    "isUsingServerZone": false,
+    "no": 11
   }
 ]

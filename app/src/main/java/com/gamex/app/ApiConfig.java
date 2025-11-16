@@ -31,4 +31,24 @@ public final class ApiConfig {
     public static String getDepositStatusEndpoint(int depositId) {
         return BASE_URL + "api/deposits/" + depositId + "/refresh-status";
     }
+
+    public static String getProductsEndpoint(int categoryId) {
+        return BASE_URL + "api/categories/" + categoryId + "/products";
+    }
+
+    public static String getTransactionsEndpoint() {
+        return BASE_URL + "api/transactions";
+    }
+
+    public static String getTransactionStatusEndpoint(int transactionId) {
+        return BASE_URL + "api/transactions/" + transactionId;
+    }
+
+    public static String getTransactionRefreshStatusEndpoint(int transactionId) {
+        return BASE_URL + "api/transactions/" + transactionId + "/refresh-status";
+    }
+
+    public static String getMyTransactionsEndpoint() {
+        return BASE_URL + "api/transactions/my";
+    }
 }
