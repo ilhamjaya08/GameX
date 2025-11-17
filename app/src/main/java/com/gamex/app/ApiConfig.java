@@ -51,4 +51,28 @@ public final class ApiConfig {
     public static String getMyTransactionsEndpoint() {
         return BASE_URL + "api/transactions/my";
     }
+
+    public static String getAllTransactionsEndpoint() {
+        return BASE_URL + "api/transactions";
+    }
+
+    public static String getAllTransactionsPageEndpoint(int page) {
+        return BASE_URL + "api/transactions?page=" + page;
+    }
+
+    public static String getAdminUsersEndpoint() {
+        return BASE_URL + "api/admin/users";
+    }
+
+    public static String getAdminUsersPageEndpoint(int page) {
+        return BASE_URL + "api/admin/users?page=" + page;
+    }
+
+    public static String getAdminUserEndpoint(int userId) {
+        return BASE_URL + "api/admin/users/" + userId;
+    }
+
+    public static String getAdminUserToggleRoleEndpoint(int userId) {
+        return BASE_URL + "api/admin/users/" + userId + "/toggle-role";
+    }
 }

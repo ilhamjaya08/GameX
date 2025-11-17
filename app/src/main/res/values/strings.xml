@@ -144,8 +144,82 @@
     <string name="admin_welcome_error">Selamat Datang, Admin</string>
     <string name="admin_subtitle">Dashboard Admin - Kelola semua aspek platform GameX</string>
     <string name="admin_stats_title">Statistik Platform</string>
-    <string name="admin_total_users">Total Users</string>
+    <string name="admin_total_users">Total Member</string>
     <string name="admin_total_revenue">Total Revenue</string>
-    <string name="admin_total_orders">Total Orders</string>
+    <string name="admin_total_orders">Total Transaksi</string>
     <string name="admin_manage_games">Kelola Games</string>
+    <string name="admin_management_title">Pengelolaan</string>
+    <string name="admin_view_all_transactions">Lihat Semua Transaksi</string>
+    <string name="admin_manage_all_users">Kelola Semua User</string>
+    <string name="admin_create_user">Buat Akun User Baru</string>
+
+    <!-- All Transactions -->
+    <string name="all_transactions_title">Semua Transaksi</string>
+    <string name="all_transactions_empty">Belum ada transaksi</string>
+    <string name="all_transactions_loading">Memuat transaksi…</string>
+    <string name="all_transactions_error">Gagal memuat transaksi</string>
+
+    <!-- Manage Users -->
+    <string name="manage_users_title">Kelola User</string>
+    <string name="manage_users_empty">Belum ada user</string>
+    <string name="manage_users_loading">Memuat user…</string>
+    <string name="manage_users_error">Gagal memuat user</string>
+    <string name="manage_users_role_admin">Admin</string>
+    <string name="manage_users_role_user">User</string>
+
+    <!-- User Management -->
+    <string name="user_management_title">Detail User</string>
+    <string name="user_management_name_label">Nama</string>
+    <string name="user_management_email_label">Email</string>
+    <string name="user_management_phone_label">Nomor Telepon</string>
+    <string name="user_management_balance_label">Saldo</string>
+    <string name="user_management_role_label">Role</string>
+    <string name="user_management_update_button">Perbarui Data</string>
+    <string name="user_management_make_admin">Jadikan Admin</string>
+    <string name="user_management_make_user">Jadikan User</string>
+    <string name="user_management_delete_button">Hapus User</string>
+    <string name="user_management_delete_confirm_title">Konfirmasi Hapus</string>
+    <string name="user_management_delete_confirm_message">Apakah Anda yakin ingin menghapus user ini? Tindakan ini tidak dapat dibatalkan.</string>
+    <string name="user_management_delete_success">User berhasil dihapus</string>
+    <string name="user_management_update_success">Data user berhasil diperbarui</string>
+    <string name="user_management_toggle_role_success">Role user berhasil diubah</string>
+    <string name="user_management_name_required">Nama tidak boleh kosong</string>
+    <string name="user_management_email_required">Email tidak boleh kosong</string>
+    <string name="user_management_email_invalid">Format email tidak valid</string>
+
+    <!-- Create User -->
+    <string name="create_user_title">Buat User Baru</string>
+    <string name="create_user_name_label">Nama</string>
+    <string name="create_user_name_hint">Masukkan nama</string>
+    <string name="create_user_email_label">Email</string>
+    <string name="create_user_email_hint">Masukkan email</string>
+    <string name="create_user_password_label">Password</string>
+    <string name="create_user_password_hint">Masukkan password</string>
+    <string name="create_user_phone_label">Nomor Telepon</string>
+    <string name="create_user_phone_hint">Masukkan nomor telepon (opsional)</string>
+    <string name="create_user_role_label">Role</string>
+    <string name="create_user_role_user">User</string>
+    <string name="create_user_role_admin">Admin</string>
+    <string name="create_user_button">Buat User</string>
+    <string name="create_user_success">User berhasil dibuat</string>
+    <string name="create_user_name_required">Nama tidak boleh kosong</string>
+    <string name="create_user_email_required">Email tidak boleh kosong</string>
+    <string name="create_user_email_invalid">Format email tidak valid</string>
+    <string name="create_user_password_required">Password tidak boleh kosong</string>
+    <string name="create_user_password_length">Password minimal 8 karakter</string>
+
+    <!-- Transaction Item -->
+    <string name="transaction_item_status_pending">Pending</string>
+    <string name="transaction_item_status_paid">Dibayar</string>
+    <string name="transaction_item_status_process">Diproses</string>
+    <string name="transaction_item_status_success">Berhasil</string>
+    <string name="transaction_item_status_failed">Gagal</string>
+    <string name="transaction_item_status_refund">Refund</string>
+    <string name="transaction_item_target">Target: %1$s</string>
+    <string name="transaction_item_payment_method">Pembayaran: %1$s</string>
+
+    <!-- Pagination -->
+    <string name="pagination_previous">Sebelumnya</string>
+    <string name="pagination_next">Selanjutnya</string>
+    <string name="pagination_page_info">Halaman %1$d dari %2$d</string>
 </resources>

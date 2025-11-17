@@ -73,6 +73,22 @@
             android:name=".OrdersActivity"
             android:exported="false"
             android:theme="@style/Theme.GameX" />
+        <activity
+            android:name=".AllTransactionsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.GameX" />
+        <activity
+            android:name=".ManageUsersActivity"
+            android:exported="false"
+            android:theme="@style/Theme.GameX" />
+        <activity
+            android:name=".UserManagementActivity"
+            android:exported="false"
+            android:theme="@style/Theme.GameX" />
+        <activity
+            android:name=".CreateUserActivity"
+            android:exported="false"
+            android:theme="@style/Theme.GameX" />
     </application>
 
 </manifest>

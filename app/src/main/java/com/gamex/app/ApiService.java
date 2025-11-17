@@ -4,13 +4,20 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.gamex.app.models.CreateUserRequest;
 import com.gamex.app.models.DepositRequest;
 import com.gamex.app.models.DepositResponse;
+import com.gamex.app.models.MessageResponse;
 import com.gamex.app.models.MyTransactionsResponse;
+import com.gamex.app.models.PaginatedTransactionsResponse;
+import com.gamex.app.models.PaginatedUsersResponse;
 import com.gamex.app.models.ProductResponse;
+import com.gamex.app.models.ToggleRoleResponse;
 import com.gamex.app.models.TransactionRequest;
 import com.gamex.app.models.TransactionResponse;
 import com.gamex.app.models.TransactionStatusResponse;
+import com.gamex.app.models.UpdateUserRequest;
+import com.gamex.app.models.User;
 import com.gamex.app.models.UserResponse;
 import com.google.gson.Gson;
 
@@ -65,6 +72,31 @@ public class ApiService {
 
     public interface MyTransactionsCallback {
         void onSuccess(MyTransactionsResponse myTransactionsResponse);
+        void onError(String errorMessage);
+    }
+
+    public interface PaginatedTransactionsCallback {
+        void onSuccess(PaginatedTransactionsResponse response);
+        void onError(String errorMessage);
+    }
+
+    public interface PaginatedUsersCallback {
+        void onSuccess(PaginatedUsersResponse response);
+        void onError(String errorMessage);
+    }
+
+    public interface UserManagementCallback {
+        void onSuccess(User user);
+        void onError(String errorMessage);
+    }
+
+    public interface ToggleRoleCallback {
+        void onSuccess(ToggleRoleResponse response);
+        void onError(String errorMessage);
+    }
+
+    public interface MessageCallback {
+        void onSuccess(String message);
         void onError(String errorMessage);
     }
 
@@ -358,6 +390,236 @@ public class ApiService {
                 } else {
                     String errorMsg = "Error: " + response.code();
                     mainHandler.post(() -> callback.onError(errorMsg));
+                }
+            } catch (IOException e) {
+                mainHandler.post(() -> callback.onError("Network error: " + e.getMessage()));
+            }
+        });
+    }
+
+    public void fetchAllTransactions(Context context, int page, PaginatedTransactionsCallback callback) {
+        String token = AuthManager.getAccessToken(context);
+
+        if (token == null) {
+            mainHandler.post(() -> callback.onError("Not authenticated"));
+            return;
+        }
+
+        executorService.execute(() -> {
+            try {
+                Request request = new Request.Builder()
+                    .url(ApiConfig.getAllTransactionsPageEndpoint(page))
+                    .addHeader("Authorization", "Bearer " + token)
+                    .addHeader("Accept", "application/json")
+                    .build();
+
+                Response response = client.newCall(request).execute();
+
+                if (response.body() != null) {
+                    String responseBody = response.body().string();
+                    PaginatedTransactionsResponse paginatedResponse = gson.fromJson(responseBody, PaginatedTransactionsResponse.class);
+
+                    mainHandler.post(() -> callback.onSuccess(paginatedResponse));
+                } else {
+                    String errorMsg = "Error: " + response.code();
+                    mainHandler.post(() -> callback.onError(errorMsg));
+                }
+            } catch (IOException e) {
+                mainHandler.post(() -> callback.onError("Network error: " + e.getMessage()));
+            }
+        });
+    }
+
+    public void fetchAdminUsers(Context context, int page, PaginatedUsersCallback callback) {
+        String token = AuthManager.getAccessToken(context);
+
+        if (token == null) {
+            mainHandler.post(() -> callback.onError("Not authenticated"));
+            return;
+        }
+
+        executorService.execute(() -> {
+            try {
+                Request request = new Request.Builder()
+                    .url(ApiConfig.getAdminUsersPageEndpoint(page))
+                    .addHeader("Authorization", "Bearer " + token)
+                    .addHeader("Accept", "application/json")
+                    .build();
+
+                Response response = client.newCall(request).execute();
+
+                if (response.body() != null) {
+                    String responseBody = response.body().string();
+                    PaginatedUsersResponse paginatedResponse = gson.fromJson(responseBody, PaginatedUsersResponse.class);
+
+                    mainHandler.post(() -> callback.onSuccess(paginatedResponse));
+                } else {
+                    String errorMsg = "Error: " + response.code();
+                    mainHandler.post(() -> callback.onError(errorMsg));
+                }
+            } catch (IOException e) {
+                mainHandler.post(() -> callback.onError("Network error: " + e.getMessage()));
+            }
+        });
+    }
+
+    public void updateUser(Context context, int userId, UpdateUserRequest updateRequest, UserManagementCallback callback) {
+        String token = AuthManager.getAccessToken(context);
+
+        if (token == null) {
+            mainHandler.post(() -> callback.onError("Not authenticated"));
+            return;
+        }
+
+        executorService.execute(() -> {
+            try {
+                String json = gson.toJson(updateRequest);
+
+                MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+                RequestBody body = RequestBody.create(json, JSON);
+
+                Request request = new Request.Builder()
+                    .url(ApiConfig.getAdminUserEndpoint(userId))
+                    .addHeader("Authorization", "Bearer " + token)
+                    .addHeader("Accept", "application/json")
+                    .put(body)
+                    .build();
+
+                Response response = client.newCall(request).execute();
+
+                if (response.isSuccessful() && response.body() != null) {
+                    String responseBody = response.body().string();
+                    User user = gson.fromJson(responseBody, User.class);
+
+                    mainHandler.post(() -> callback.onSuccess(user));
+                } else {
+                    String errorMsg = "Error: " + response.code();
+                    if (response.body() != null) {
+                        errorMsg += " - " + response.body().string();
+                    }
+                    final String finalErrorMsg = errorMsg;
+                    mainHandler.post(() -> callback.onError(finalErrorMsg));
+                }
+            } catch (IOException e) {
+                mainHandler.post(() -> callback.onError("Network error: " + e.getMessage()));
+            }
+        });
+    }
+
+    public void toggleUserRole(Context context, int userId, ToggleRoleCallback callback) {
+        String token = AuthManager.getAccessToken(context);
+
+        if (token == null) {
+            mainHandler.post(() -> callback.onError("Not authenticated"));
+            return;
+        }
+
+        executorService.execute(() -> {
+            try {
+                RequestBody emptyBody = RequestBody.create("", null);
+
+                Request request = new Request.Builder()
+                    .url(ApiConfig.getAdminUserToggleRoleEndpoint(userId))
+                    .addHeader("Authorization", "Bearer " + token)
+                    .addHeader("Accept", "application/json")
+                    .patch(emptyBody)
+                    .build();
+
+                Response response = client.newCall(request).execute();
+
+                if (response.isSuccessful() && response.body() != null) {
+                    String responseBody = response.body().string();
+                    ToggleRoleResponse toggleResponse = gson.fromJson(responseBody, ToggleRoleResponse.class);
+
+                    mainHandler.post(() -> callback.onSuccess(toggleResponse));
+                } else {
+                    String errorMsg = "Error: " + response.code();
+                    if (response.body() != null) {
+                        errorMsg += " - " + response.body().string();
+                    }
+                    final String finalErrorMsg = errorMsg;
+                    mainHandler.post(() -> callback.onError(finalErrorMsg));
+                }
+            } catch (IOException e) {
+                mainHandler.post(() -> callback.onError("Network error: " + e.getMessage()));
+            }
+        });
+    }
+
+    public void createUser(Context context, CreateUserRequest createRequest, UserManagementCallback callback) {
+        String token = AuthManager.getAccessToken(context);
+
+        if (token == null) {
+            mainHandler.post(() -> callback.onError("Not authenticated"));
+            return;
+        }
+
+        executorService.execute(() -> {
+            try {
+                String json = gson.toJson(createRequest);
+
+                MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+                RequestBody body = RequestBody.create(json, JSON);
+
+                Request request = new Request.Builder()
+                    .url(ApiConfig.getAdminUsersEndpoint())
+                    .addHeader("Authorization", "Bearer " + token)
+                    .addHeader("Accept", "application/json")
+                    .post(body)
+                    .build();
+
+                Response response = client.newCall(request).execute();
+
+                if (response.isSuccessful() && response.body() != null) {
+                    String responseBody = response.body().string();
+                    User user = gson.fromJson(responseBody, User.class);
+
+                    mainHandler.post(() -> callback.onSuccess(user));
+                } else {
+                    String errorMsg = "Error: " + response.code();
+                    if (response.body() != null) {
+                        errorMsg += " - " + response.body().string();
+                    }
+                    final String finalErrorMsg = errorMsg;
+                    mainHandler.post(() -> callback.onError(finalErrorMsg));
+                }
+            } catch (IOException e) {
+                mainHandler.post(() -> callback.onError("Network error: " + e.getMessage()));
+            }
+        });
+    }
+
+    public void deleteUser(Context context, int userId, MessageCallback callback) {
+        String token = AuthManager.getAccessToken(context);
+
+        if (token == null) {
+            mainHandler.post(() -> callback.onError("Not authenticated"));
+            return;
+        }
+
+        executorService.execute(() -> {
+            try {
+                Request request = new Request.Builder()
+                    .url(ApiConfig.getAdminUserEndpoint(userId))
+                    .addHeader("Authorization", "Bearer " + token)
+                    .addHeader("Accept", "application/json")
+                    .delete()
+                    .build();
+
+                Response response = client.newCall(request).execute();
+
+                if (response.isSuccessful() && response.body() != null) {
+                    String responseBody = response.body().string();
+                    MessageResponse messageResponse = gson.fromJson(responseBody, MessageResponse.class);
+
+                    mainHandler.post(() -> callback.onSuccess(messageResponse.getMessage()));
+                } else {
+                    String errorMsg = "Error: " + response.code();
+                    if (response.body() != null) {
+                        errorMsg += " - " + response.body().string();
+                    }
+                    final String finalErrorMsg = errorMsg;
+                    mainHandler.post(() -> callback.onError(finalErrorMsg));
                 }
             } catch (IOException e) {
                 mainHandler.post(() -> callback.onError("Network error: " + e.getMessage()));

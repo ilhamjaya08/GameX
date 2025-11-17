@@ -10,8 +10,11 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import com.gamex.app.models.PaginatedTransactionsResponse;
+import com.gamex.app.models.PaginatedUsersResponse;
 import com.gamex.app.models.UserResponse;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.Calendar;
 
@@ -23,7 +26,6 @@ public class AdminActivity extends AppCompatActivity {
     private ApiService apiService;
     private TextView adminName;
     private TextView totalUsers;
-    private TextView totalRevenue;
     private TextView totalOrders;
 
     @Override
@@ -36,29 +38,29 @@ public class AdminActivity extends AppCompatActivity {
 
         adminName = findViewById(R.id.adminName);
         totalUsers = findViewById(R.id.totalUsers);
-        totalRevenue = findViewById(R.id.totalRevenue);
         totalOrders = findViewById(R.id.totalOrders);
 
         ImageView accountButton = findViewById(R.id.adminAccountButton);
         accountButton.setOnClickListener(v -> openProfileActivity());
 
-        CardView usersCard = findViewById(R.id.usersCard);
-        CardView revenueCard = findViewById(R.id.revenueCard);
-        CardView ordersCard = findViewById(R.id.ordersCard);
-        CardView gamesCard = findViewById(R.id.gamesCard);
+        MaterialCardView viewAllTransactionsCard = findViewById(R.id.viewAllTransactionsCard);
+        MaterialCardView manageAllUsersCard = findViewById(R.id.manageAllUsersCard);
+        MaterialCardView createUserCard = findViewById(R.id.createUserCard);
 
-        usersCard.setOnClickListener(v ->
-                Toast.makeText(this, "Users Management", Toast.LENGTH_SHORT).show()
-        );
-        revenueCard.setOnClickListener(v ->
-                Toast.makeText(this, "Revenue Reports", Toast.LENGTH_SHORT).show()
-        );
-        ordersCard.setOnClickListener(v ->
-                Toast.makeText(this, "Orders Management", Toast.LENGTH_SHORT).show()
-        );
-        gamesCard.setOnClickListener(v ->
-                Toast.makeText(this, "Games Management", Toast.LENGTH_SHORT).show()
-        );
+        viewAllTransactionsCard.setOnClickListener(v -> {
+            Intent intent = new Intent(this, AllTransactionsActivity.class);
+            startActivity(intent);
+        });
+
+        manageAllUsersCard.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ManageUsersActivity.class);
+            startActivity(intent);
+        });
+
+        createUserCard.setOnClickListener(v -> {
+            Intent intent = new Intent(this, CreateUserActivity.class);
+            startActivity(intent);
+        });
 
         TextView footerText = findViewById(R.id.adminFooterText);
         int year = Calendar.getInstance().get(Calendar.YEAR);
@@ -106,9 +108,41 @@ public class AdminActivity extends AppCompatActivity {
     }
 
     private void loadDashboardStats() {
-        totalUsers.setText("1,234");
-        totalRevenue.setText(CurrencyUtils.formatToRupiah(15000000));
-        totalOrders.setText("5,678");
+        if (!NetworkUtils.isNetworkAvailable(this)) {
+            totalUsers.setText("0");
+            totalOrders.setText("0");
+            return;
+        }
+
+        // Load total transactions
+        apiService.fetchAllTransactions(this, 1, new ApiService.PaginatedTransactionsCallback() {
+            @Override
+            public void onSuccess(PaginatedTransactionsResponse response) {
+                if (response != null) {
+                    totalOrders.setText(String.valueOf(response.getTotal()));
+                }
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                totalOrders.setText("0");
+            }
+        });
+
+        // Load total users
+        apiService.fetchAdminUsers(this, 1, new ApiService.PaginatedUsersCallback() {
+            @Override
+            public void onSuccess(PaginatedUsersResponse response) {
+                if (response != null) {
+                    totalUsers.setText(String.valueOf(response.getTotal()));
+                }
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                totalUsers.setText("0");
+            }
+        });
     }
 
     private void openProfileActivity() {
